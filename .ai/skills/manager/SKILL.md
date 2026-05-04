@@ -1,0 +1,80 @@
+---
+name: manager
+description: Routes non-trivial work to skills, pipelines, and gates in playforge. Use when a task needs classification, validation, or coordination across more than one capability.
+---
+
+# manager
+
+The manager owns routing decisions for non-trivial work in playforge. It does not execute work; it chooses what runs and in what order.
+
+## When To Use
+
+Load `manager` when:
+
+- the task is non-trivial (anything beyond a single-file obvious edit)
+- routing must choose between multiple skills, pipelines, or agents
+- validation and completion enforcement should stay centralized
+
+Do not load `manager` for:
+
+- trivial single-step low-risk work
+- purely factual questions with no execution path
+- design discussion before a direction is chosen — use `brainstorm` first
+
+## Mandatory Behavior
+
+### 1. Classify Before Action
+
+Before any non-trivial work begins, state explicitly:
+
+- **Complexity:** trivial or non-trivial
+- **Risk:** low, medium, high, or system-level
+- **Cross-domain:** does the task cross domains or systems (e.g., framework + tests + ESLint plugin)?
+
+If the task is actually trivial, say so and release it for direct execution.
+
+### 2. Routing Only
+
+The manager chooses and sequences capabilities. It does not implement steps itself. If you find yourself describing how to do the work, you have left the manager role.
+
+### 3. Name The Concrete Next Capability
+
+Produce a routing decision that identifies:
+
+- which skill or pipeline runs next
+- which validation or review gate applies
+- which reference docs must be loaded
+
+Available pipelines for non-trivial routed work:
+
+- `.ai/pipelines/feature-implementation.md`
+- `.ai/pipelines/code-review.md`
+- `.ai/pipelines/code-refactoring.md`
+
+For non-trivial work that none of those fit (e.g., bug investigation, migration, CI work, doc change with executable impact), describe an ad-hoc step sequence and end it with `report-completion`.
+
+### 4. Append `report-completion` To Every Non-Trivial Pipeline
+
+`report-completion` is the mandatory closure step for every non-trivial routed task. The manager owns this responsibility; pipelines and execution skills must not restate it.
+
+### 5. Escalate By Risk
+
+- low or medium risk + non-trivial: pipeline plus the validation gate the pipeline defines
+- high risk: pipeline plus stronger review (explicit pre-handoff user confirmation, broader test runs)
+- system-level (CI workflow, ESLint plugin internals under `eslint-plugin-xframework/`, fixture infrastructure under `framework/fixtures/`, framework core under `framework/core/`): block implementation until the user confirms scope and validation plan
+
+### 6. Stop On Missing Or Conflicting Policy
+
+If a safe routing decision depends on missing or conflicting policy, stop and surface the ambiguity:
+
+- design ambiguity → load `brainstorm`
+- permission ambiguity (matches a "Risky Changes Require User Consent" item in `AGENTS.md`) → ask the user directly
+
+## Output Contract
+
+At routing time, produce a short execution plan:
+
+- task classification (complexity, risk, cross-domain)
+- selected capabilities in order
+- validation and review requirements
+- explicit final `report-completion` step

@@ -83,7 +83,7 @@ Read `.ai/docs/project_specification.md` first. Treat it as the authoritative so
 - whether `AGENTS.md` exists
 - whether native tool entrypoints exist
 - whether skills, pipelines, agents, or reference docs already exist
-- whether shared project rules already exist
+- whether shared project conventions already exist
 - whether routing logic exists
 - whether execution skills are improperly coupled to orchestration
 
@@ -93,6 +93,7 @@ Read `.ai/docs/project_specification.md` first. Treat it as the authoritative so
 - which tool-specific entry files exist
 - whether the repo is single-tool or multi-tool
 - whether existing tool-specific files contain real policy or are already adapters
+- whether any tool-specific adapter is too passive to enforce the root contract
 
 ### F. Reusable Project Knowledge
 
@@ -102,11 +103,18 @@ Identify reusable knowledge that may justify reference docs:
 - domain context
 - repository structure
 
-Identify repeated best-practice statements that may justify shared project rules:
+Identify repeated behavior that may justify shared project conventions:
 - coding standards
-- review standards
+- work standards
 - testing standards
-- domain rules
+- domain standards
+
+Identify repeated non-trivial task types that may justify pipelines.
+
+For each candidate, decide whether it is:
+- a direct task that needs no pipeline
+- an atomic skill
+- a pipeline with distinct ordered steps, validation, or review gates
 
 Do not decide what to create yet.
 
@@ -168,7 +176,7 @@ High-impact discussion topics may include:
 - whether existing capabilities exactly satisfy required protocol-derived capabilities
 - whether pipelines are justified and which real pipeline should be formalized first
 - whether reference docs should be created
-- whether shared project rules are justified by repeated behavior across skills or agents
+- whether shared project conventions are justified by repeated behavior across skills or agents
 - whether existing files should be migrated, split, merged, or preserved
 - whether unselected AI entry files should be removed or neutralized
 
@@ -184,95 +192,20 @@ Begin only after the user confirms the decision summary.
 
 ### Composition Rules
 
-- `MANIFEST.md` and `IMPLEMENTATION.md` are the canonical framework sources
-- for multi-tool or AI-agnostic projects, `AGENTS.md` is the project root contract
-- for single-tool projects, use the tool's official native entrypoint as the full root contract
-- verify the chosen tool's native entrypoint convention from current official docs during composition
-- tool-specific adapters must stay thin and must not duplicate policy
-- generated project skills must be standalone project artifacts
-- generated project skills must include protocol-mandated behavior plus minimal project-specific adaptation
-- generated project skills must not reference framework protocol files or framework-only paths
-- execution skills must stay isolated and must not contain manager or cross-skill routing language
+Apply `IMPLEMENTATION.md` directly: §Project Landscape (root contract, skills, pipelines, agents, conventions, reference docs), §Principle Implementation, §Framework Protocol Contract, and §Capability Triggers.
+
+Stage-specific reminders:
+- verify the chosen tool's native entrypoint convention against current official docs during composition
 - use `pipeline` terminology consistently
-- keep file size near the 150-line target when possible without harming quality
+- tool-specific adapters must be explicit mandatory shims, not passive references; each adapter must name the canonical root contract, require the tool to load and follow it before project work, state that the root contract wins on conflict, and stop if the root contract is unavailable
+- if repeated software task types such as feature implementation, task review, or anything else have distinct ordered steps, create separate pipelines for them instead of representing them only as skills
+- before any risky change (splitting monolithic files, moving artifacts into `.ai/`, renaming, merging, deleting, replacing tool entrypoints, choosing between multiple valid implementation contracts), stop and ask the user — name what changes, why, and the compliant target state
 
 ### Protocol-Derived Capabilities
 
-Derive required capabilities from protocol frontmatter:
-- if `implementation: mandatory` and a `requires_when` trigger is present, the corresponding project capability must exist
-- if `implementation: optional` and a `requires_when` trigger is present, implement it only if the project clearly needs it
+Derive required capabilities from protocol frontmatter per `IMPLEMENTATION.md` §Framework Protocol Contract.
 
-Use the protocol filename basename as the default capability name only when the project does not already have an exact equivalent.
-
-An existing capability counts as an exact equivalent only if:
-- responsibility matches
-- mandatory protocol coverage matches
-- no contradiction exists
-
-If the existing capability is only close:
-- treat it as non-equivalent
-- stop and ask the user before splitting, merging, replacing, or duplicating anything
-
-### Root Contract Rules
-
-For multi-tool or AI-agnostic projects:
-- create or update `AGENTS.md`
-- create or update thin tool-specific adapters that say to follow `AGENTS.md` strictly
-- store shared capabilities under `.ai/skills`, `.ai/pipelines`, `.ai/agents`, `.ai/rules`, and `.ai/docs` unless the user explicitly chose another location
-- create each shared skill as `.ai/skills/<skill_name>/SKILL.md`
-- use Claude-style YAML frontmatter in each shared skill with at least `name` and `description`
-
-For single-tool projects:
-- place the full contract directly in the official native entrypoint
-- use the tool's native structure for supporting artifacts by default
-- do not create `AGENTS.md` unless the user explicitly asked for AI-agnostic or multi-tool structure
-
-### Risky Change Safety
-
-Before any risky change, stop and ask the user.
-
-This includes:
-- splitting monolithic pipeline files
-- moving artifacts into `.ai/`
-- renaming capabilities
-- merging or deleting duplicated artifacts
-- replacing existing tool entrypoints
-- choosing between multiple valid implementation contracts
-
-When asking, explain:
-- what should change
-- why it is needed
-- what the compliant target state would be
-
-### Pipelines
-
-Rules:
-- create a pipeline only when a repeated or non-trivial multi-step workflow is present
-- anchor each pipeline to a real workflow discovered in the profile or repository
-- if multiple valid workflows could become the first pipeline, ask the user which one to formalize first
-- use one pipeline per file when more than one pipeline exists or when the pipeline is substantial
-
-### Reference Docs
-
-Rules:
-- create reference docs only when reusable project knowledge clearly justifies them
-- use reference docs for facts such as architecture, commands, project context, domain vocabulary, and authoritative source locations
-- do not create reference docs by default
-
-### Project Rules
-
-Rules:
-- create shared project rules only when at least two skills or agents need the same best-practice statements
-- store shared rules under `.ai/rules` in multi-tool or AI-agnostic projects unless the user explicitly chose another location
-- do not create a rule for a single skill only
-- reference shared rules from skills or agents instead of copying them
-
-### Validation and Completion
-
-Rules:
-- every non-trivial pipeline must include at least one explicit validation step
-- stronger review loops apply only for higher-risk work
-- `task-complete` must be the closure step for non-trivial work
+Use the protocol filename basename as the default capability name only when the project does not already have an exact equivalent. An existing capability is exact only when responsibility matches, mandatory protocol coverage matches, and no contradiction exists. If only close, treat as non-equivalent and ask the user before splitting, merging, replacing, or duplicating.
 
 ### Scope Boundaries
 
@@ -314,7 +247,7 @@ The final system must:
 - align with `IMPLEMENTATION.md`
 - be project-specific rather than generic
 - stand on its own without requiring `02_review.md` to rescue obvious flaws
-- avoid duplicated rules
+- avoid duplicated conventions
 - avoid competing authorities
 - avoid unnecessary abstraction
 - preserve good existing project capabilities where possible
