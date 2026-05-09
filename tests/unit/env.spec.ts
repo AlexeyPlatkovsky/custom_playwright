@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-import { loadEnv } from "../../framework/config/env";
+import { env, getConfig, loadEnv } from "../../framework/config/env";
 import { parseEnv } from "../../framework/config/schema";
 
 test("env parser accepts the documented baseline @unit", () => {
@@ -34,4 +34,20 @@ test("typed config uses automationexercise as the default base url @unit", () =>
   const config = loadEnv({ HIGHLIGHT: "0" });
 
   expect(config.BASE_URL).toBe("https://automationexercise.com");
+});
+
+test("getConfig returns camelCase typed config @unit", () => {
+  const config = getConfig();
+
+  expect(typeof config.baseUrl).toBe("string");
+  expect(typeof config.highlight).toBe("boolean");
+});
+
+test("getConfig maps SCREAMING_SNAKE_CASE env to camelCase @unit", () => {
+  const config = getConfig();
+
+  expect(config.baseUrl).toBe(env.BASE_URL);
+  expect(config.highlight).toBe(env.HIGHLIGHT);
+  expect(config.testPassword).toBe(env.TEST_PASSWORD);
+  expect(config.testUsername).toBe(env.TEST_USERNAME);
 });

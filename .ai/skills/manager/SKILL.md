@@ -51,7 +51,7 @@ Available pipelines for non-trivial routed work:
 - `.ai/pipelines/code-review.md`
 - `.ai/pipelines/code-refactoring.md`
 
-For non-trivial work that none of those fit (e.g., bug investigation, migration, CI work, doc change with executable impact), describe an ad-hoc step sequence and end it with `report-completion`.
+For non-trivial work that none of those fit (e.g., bug investigation, migration, CI work, doc change with executable impact), describe an ad-hoc step sequence and end it with `report-completion`. When the ad-hoc work is a new feature or significant change (not a trivial task or ongoing fix), include `.ai/skills/branch-setup/SKILL.md` after `bead-work` and before any implementation step begins.
 
 ### 4. Append `report-completion` To Every Non-Trivial Pipeline
 

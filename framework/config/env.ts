@@ -40,3 +40,17 @@ export function loadEnv(rawEnv: NodeJS.ProcessEnv = process.env): EnvConfig {
 }
 
 export const env = loadEnv();
+
+export interface Config {
+  readonly baseUrl: string;
+  readonly highlight: boolean;
+  readonly testPassword?: string;
+  readonly testUsername?: string;
+}
+
+export const getConfig = (): Config => ({
+  baseUrl: env.BASE_URL,
+  highlight: env.HIGHLIGHT,
+  testPassword: env.TEST_PASSWORD,
+  testUsername: env.TEST_USERNAME
+});

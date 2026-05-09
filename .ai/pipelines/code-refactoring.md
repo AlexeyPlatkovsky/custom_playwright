@@ -11,7 +11,8 @@ Use `feature-implementation` when behavior is being added. Refactors crossing fr
 ## Sequence
 
 1. Run `.ai/skills/bead-work/SKILL.md`.
-2. Run `.ai/skills/refactor-code/SKILL.md`.
+2. Run `.ai/skills/branch-setup/SKILL.md`.
+3. Run `.ai/skills/refactor-code/SKILL.md`.
 
 ## Validation Gate
 
