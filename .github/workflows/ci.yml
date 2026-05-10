@@ -60,9 +60,71 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Typecheck
-        run: npm run typecheck
+        id: typecheck
+        continue-on-error: true
+        shell: bash
+        run: |
+          format_duration() {
+            local total_seconds="$1"
+            printf '%dm %02ds' "$((total_seconds / 60))" "$((total_seconds % 60))"
+          }
+
+          start_epoch=$(date +%s)
+
+          set +e
+          npm run typecheck
+          check_exit_code=$?
+          set -e
+
+          end_epoch=$(date +%s)
+          duration_seconds=$((end_epoch - start_epoch))
+          result="passed"
+
+          if [ "$check_exit_code" -ne 0 ]; then
+            result="failed"
+          fi
+
+          {
+            echo "exit_code=$check_exit_code"
+            echo "result=$result"
+            echo "duration_seconds=$duration_seconds"
+            echo "duration_human=$(format_duration "$duration_seconds")"
+          } >> "$GITHUB_OUTPUT"
+
+          exit 0
       - name: Lint
-        run: npm run lint
+        id: lint
+        continue-on-error: true
+        shell: bash
+        run: |
+          format_duration() {
+            local total_seconds="$1"
+            printf '%dm %02ds' "$((total_seconds / 60))" "$((total_seconds % 60))"
+          }
+
+          start_epoch=$(date +%s)
+
+          set +e
+          npm run lint
+          check_exit_code=$?
+          set -e
+
+          end_epoch=$(date +%s)
+          duration_seconds=$((end_epoch - start_epoch))
+          result="passed"
+
+          if [ "$check_exit_code" -ne 0 ]; then
+            result="failed"
+          fi
+
+          {
+            echo "exit_code=$check_exit_code"
+            echo "result=$result"
+            echo "duration_seconds=$duration_seconds"
+            echo "duration_human=$(format_duration "$duration_seconds")"
+          } >> "$GITHUB_OUTPUT"
+
+          exit 0
       - name: Run unit tests
         id: unit
         continue-on-error: true
@@ -217,6 +279,10 @@ jobs:
         shell: bash
         env:
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          TYPECHECK_RESULT: ${{ steps.typecheck.outputs.result }}
+          TYPECHECK_DURATION: ${{ steps.typecheck.outputs.duration_human }}
+          LINT_RESULT: ${{ steps.lint.outputs.result }}
+          LINT_DURATION: ${{ steps.lint.outputs.duration_human }}
           UNIT_RESULT: ${{ steps.unit.outputs.result }}
           UNIT_DURATION: ${{ steps.unit.outputs.duration_human }}
           UNIT_PLAYWRIGHT_URL: ${{ steps.unit-playwright-report.outputs.artifact-url }}
@@ -253,13 +319,23 @@ jobs:
             echo "$joined_links"
           }
 
+          format_result() {
+            case "$1" in
+              passed) echo "✅ Passed" ;;
+              failed) echo "❌ Failed" ;;
+              *) echo "⚪ Unknown" ;;
+            esac
+          }
+
           {
-            echo "## Test summary"
+            echo "## CI run summary"
             echo
-            echo "| Test type | Result | Total time execution | Report link |"
+            echo "| Check | Result | Total time execution | Report link |"
             echo "| --- | --- | --- | --- |"
-            echo "| Unit | ${UNIT_RESULT:-unknown} | ${UNIT_DURATION:-n/a} | $(format_links "$UNIT_PLAYWRIGHT_URL" "$UNIT_ALLURE_URL") |"
-            echo "| UI | ${UI_RESULT:-unknown} | ${UI_DURATION:-n/a} | $(format_links "$UI_PLAYWRIGHT_URL" "$UI_ALLURE_URL") |"
+            echo "| Typecheck | $(format_result "${TYPECHECK_RESULT:-unknown}") | ${TYPECHECK_DURATION:-n/a} | n/a |"
+            echo "| Lint | $(format_result "${LINT_RESULT:-unknown}") | ${LINT_DURATION:-n/a} | n/a |"
+            echo "| Unit tests | $(format_result "${UNIT_RESULT:-unknown}") | ${UNIT_DURATION:-n/a} | $(format_links "$UNIT_PLAYWRIGHT_URL" "$UNIT_ALLURE_URL") |"
+            echo "| UI tests | $(format_result "${UI_RESULT:-unknown}") | ${UI_DURATION:-n/a} | $(format_links "$UI_PLAYWRIGHT_URL" "$UI_ALLURE_URL") |"
             echo
             echo "Run: [#${{ github.run_number }}](${RUN_URL})"
           } >> "$GITHUB_STEP_SUMMARY"
@@ -268,6 +344,10 @@ jobs:
         uses: actions/github-script@v9
         env:
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          TYPECHECK_RESULT: ${{ steps.typecheck.outputs.result }}
+          TYPECHECK_DURATION: ${{ steps.typecheck.outputs.duration_human }}
+          LINT_RESULT: ${{ steps.lint.outputs.result }}
+          LINT_DURATION: ${{ steps.lint.outputs.duration_human }}
           UNIT_RESULT: ${{ steps.unit.outputs.result }}
           UNIT_DURATION: ${{ steps.unit.outputs.duration_human }}
           UNIT_PLAYWRIGHT_URL: ${{ steps.unit-playwright-report.outputs.artifact-url }}
@@ -299,13 +379,27 @@ jobs:
               return links.length > 0 ? links.join(' · ') : 'No artifact';
             }
 
+            function formatResult(result) {
+              if (result === 'passed') {
+                return '✅ Passed';
+              }
+
+              if (result === 'failed') {
+                return '❌ Failed';
+              }
+
+              return '⚪ Unknown';
+            }
+
             const body = [
-              '## CI Test Summary',
+              '## CI Run Summary',
               '',
-              '| Test type | Result | Total time execution | Report link |',
+              '| Check | Result | Total time execution | Report link |',
               '| --- | --- | --- | --- |',
-              `| Unit | ${process.env.UNIT_RESULT || 'unknown'} | ${process.env.UNIT_DURATION || 'n/a'} | ${formatLinks(process.env.UNIT_PLAYWRIGHT_URL, process.env.UNIT_ALLURE_URL)} |`,
-              `| UI | ${process.env.UI_RESULT || 'unknown'} | ${process.env.UI_DURATION || 'n/a'} | ${formatLinks(process.env.UI_PLAYWRIGHT_URL, process.env.UI_ALLURE_URL)} |`,
+              `| Typecheck | ${formatResult(process.env.TYPECHECK_RESULT)} | ${process.env.TYPECHECK_DURATION || 'n/a'} | n/a |`,
+              `| Lint | ${formatResult(process.env.LINT_RESULT)} | ${process.env.LINT_DURATION || 'n/a'} | n/a |`,
+              `| Unit tests | ${formatResult(process.env.UNIT_RESULT)} | ${process.env.UNIT_DURATION || 'n/a'} | ${formatLinks(process.env.UNIT_PLAYWRIGHT_URL, process.env.UNIT_ALLURE_URL)} |`,
+              `| UI tests | ${formatResult(process.env.UI_RESULT)} | ${process.env.UI_DURATION || 'n/a'} | ${formatLinks(process.env.UI_PLAYWRIGHT_URL, process.env.UI_ALLURE_URL)} |`,
               '',
               `Run: [#${context.runNumber}](${process.env.RUN_URL})`
             ].join('\n');
@@ -320,12 +414,16 @@ jobs:
         if: always()
         shell: bash
         env:
+          TYPECHECK_CONCLUSION: ${{ steps.typecheck.conclusion }}
+          TYPECHECK_EXIT_CODE: ${{ steps.typecheck.outputs.exit_code }}
+          LINT_CONCLUSION: ${{ steps.lint.conclusion }}
+          LINT_EXIT_CODE: ${{ steps.lint.outputs.exit_code }}
           UNIT_CONCLUSION: ${{ steps.unit.conclusion }}
           UNIT_EXIT_CODE: ${{ steps.unit.outputs.exit_code }}
           UI_CONCLUSION: ${{ steps.ui.conclusion }}
           UI_EXIT_CODE: ${{ steps.ui.outputs.exit_code }}
         run: |
-          if [ "$UNIT_CONCLUSION" != "success" ] || [ "$UI_CONCLUSION" != "success" ] || [ "${UNIT_EXIT_CODE:-1}" != "0" ] || [ "${UI_EXIT_CODE:-1}" != "0" ]; then
-            echo "One or more test suites failed." >&2
+          if [ "$TYPECHECK_CONCLUSION" != "success" ] || [ "$LINT_CONCLUSION" != "success" ] || [ "$UNIT_CONCLUSION" != "success" ] || [ "$UI_CONCLUSION" != "success" ] || [ "${TYPECHECK_EXIT_CODE:-1}" != "0" ] || [ "${LINT_EXIT_CODE:-1}" != "0" ] || [ "${UNIT_EXIT_CODE:-1}" != "0" ] || [ "${UI_EXIT_CODE:-1}" != "0" ]; then
+            echo "One or more CI checks failed." >&2
             exit 1
           fi
