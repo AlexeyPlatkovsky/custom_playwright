@@ -57,7 +57,7 @@ Avoid `waitForTimeout` or sleep calls. Prefer locator-based waits via assertion 
 
 ### 5. Accessibility Smoke (Optional)
 
-If `@axe-core/playwright` is present in `package.json`, append a report-only axe check after main assertions. If the package is absent, note `axe smoke skipped — package not installed` in the handoff. Do not install the package without user confirmation.
+If `@axe-core/playwright` is present in `package.json`, append a report-only axe check after main assertions. If the package is absent, note `axe smoke skipped — package not installed` in the handoff. Record the result on the `Accessibility smoke:` line of the DEVELOPER OUTPUT block. Do not install the package without user confirmation.
 
 ### 6. Verify Before Handoff
 

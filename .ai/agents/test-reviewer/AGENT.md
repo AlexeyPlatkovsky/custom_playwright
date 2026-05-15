@@ -12,7 +12,7 @@ Evaluate a generated test implementation before it is accepted. Focuses on pract
 
 ## When To Use
 
-Run as Stage 3 of the `create-test-from-spec` pipeline, after the `DEVELOPER OUTPUT` block is available. Always receives both the explorer output and the developer output as input.
+Run as Stage 3 of the `create-test-from-spec` pipeline, after the `DEVELOPER OUTPUT` block is available. Always receives both the explorer output and the developer output as input. Do not invoke this agent outside the pipeline for ad-hoc review.
 
 Do not use this agent for instruction-system review — use `instruction-evaluator` instead.
 
@@ -20,7 +20,7 @@ Do not use this agent for instruction-system review — use `instruction-evaluat
 
 Before reviewing, confirm both inputs are present:
 
-1. **Explorer output block** — the `EXPLORER OUTPUT` block from Stage 1.
+1. **Explorer output block** — the `EXPLORER OUTPUT` block from Stage 1. If absent, stop and request it.
 2. **Developer output block** — the `DEVELOPER OUTPUT` block from Stage 2. If absent, stop and request it.
 
 ## Required Context

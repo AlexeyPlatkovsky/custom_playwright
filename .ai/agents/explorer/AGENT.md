@@ -33,7 +33,7 @@ Do not load unrelated project files.
 Given a test specification or user story, inspect:
 
 1. **Relevant pages and components** — scan `pages/` and `pages/components/` for existing page objects and components that touch the target flow.
-2. **Existing test patterns** — scan `tests/ui/` and `tests/framework/` for specs that exercise the same pages, components, or flows.
+2. **Existing test patterns** — scan `tests/ui/` and `tests/unit/` for specs that exercise the same pages, components, or flows.
 3. **Assertion helpers** — scan `assertions/` for helpers that fit the target assertions.
 4. **Fixtures** — check `framework/fixtures/` for shared fixtures applicable to the test.
 5. **Selectors and locators** — identify selectors used in existing page objects for the target UI area.
