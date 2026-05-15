@@ -50,6 +50,16 @@ test("product details page exposes structured product information @ui", async ({
   });
 });
 
+test("searching for a non-existent product shows zero results on the Products page @ui", async ({ page }) => {
+  const productsPage = await new ProductsPage(page).open();
+
+  await productsPage.searchProducts("xyzzy-nonexistent-12345");
+
+  await assertUrl(page, /\/products\?search=xyzzy-nonexistent-12345$/);
+  await assertTextEquals(productsPage.catalog.title, "Searched Products");
+  await assertCount(productsPage.catalog.cards, 0);
+});
+
 test("subscription footer confirms a successful subscription on the live site @ui", async ({
   page
 }) => {
