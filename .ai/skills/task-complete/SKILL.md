@@ -1,15 +1,15 @@
 ---
-name: report-completion
+name: task-complete
 description: Closure report for non-trivial routed work in playforge. Run as the final step of every non-trivial pipeline.
 ---
 
-# report-completion
+# task-complete
 
-`report-completion` produces a closure record for non-trivial work. It is appended to every non-trivial pipeline by `manager`; pipelines and execution skills do not restate this rule.
+`task-complete` produces a closure record for non-trivial work.
 
 ## When To Use
 
-Use `report-completion` when:
+Use `task-complete` when:
 
 - a task is non-trivial
 - work ran through a routed multi-step path
@@ -25,7 +25,7 @@ Do not use it for:
 
 ### 1. Closure, Not Re-Planning
 
-`report-completion` reports what happened. It does not invent new steps or reopen orchestration. If the executed path diverged from the planned path, say so in the table; do not redesign the pipeline after the fact.
+`task-complete` reports what happened. It does not invent new steps or reopen orchestration. If the executed path diverged from the planned path, say so in the table; do not redesign the pipeline after the fact.
 
 ### 2. Exact Report Format
 
@@ -55,10 +55,14 @@ Skipped steps must always include a comment.
 | Step | Skill / Agent | Comment |
 |------|---------------|---------|
 | Classify task | manager | non-trivial, medium risk |
-| Implement page object | feature-implementation | |
-| Add component | feature-implementation | |
-| Targeted UI tests | feature-implementation | |
-| `npm run typecheck` | feature-implementation | |
-| `npm run lint` | feature-implementation | |
-| `npm run test` | feature-implementation | skipped — change does not touch shared framework behavior |
-| Closure | report-completion | |
+| Implement page object | implement-feature | |
+| Add component | implement-feature | |
+| Targeted UI tests | implement-feature | |
+| `npm run typecheck` | implement-feature | |
+| `npm run lint` | implement-feature | |
+| `npm run test` | implement-feature | skipped — change does not touch shared framework behavior |
+| Closure | task-complete | |
+
+## Output Contract
+
+Produce the closure table with Step / Skill / Agent / Comment columns before declaring completion.

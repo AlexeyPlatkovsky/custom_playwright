@@ -23,6 +23,19 @@ This repository implements a strict Playwright Component-DSL and keeps the autho
 - `docs/guides/authoring-with-the-dsl.md` and `docs/migration/*.md` explain how to apply the same patterns in new specs.
 - `docs/architecture/hardening-and-readiness.md` records the repeated browser run, proxy benchmark, and deferred-item decisions.
 
+## AI Instruction System
+
+The `.ai/` directory holds the AI operational layer. Key components:
+
+- `manager` skill — classifies and routes tasks; selects a pipeline but does not orchestrate stages internally
+- `create-test-from-spec` pipeline — staged workflow for test generation: explorer → developer → reviewer → task-complete
+- `explorer` agent — read-only; inspects pages, components, fixtures, and patterns before implementation; produces a compact handoff
+- `test-reviewer` agent — read-only; validates generated tests for DSL compliance, selector quality, and maintainability
+- `task-complete` skill — closure record for every non-trivial routed task
+- `instruction-evaluator` agent — read-only; evaluates instruction artifacts (skills, pipelines, agents, conventions)
+
+Accessibility smoke is an optional lightweight integration in the `create-test-from-spec` pipeline. When `@axe-core/playwright` is present, a report-only axe check can be appended after main test assertions. It records violations without failing the test.
+
 ## Locked constraints
 
 - `xPage` and `xComponent` remain separate abstractions.

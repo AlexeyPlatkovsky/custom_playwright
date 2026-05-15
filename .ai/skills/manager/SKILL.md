@@ -50,12 +50,15 @@ Available pipelines for non-trivial routed work:
 - `.ai/pipelines/feature-implementation.md`
 - `.ai/pipelines/code-review.md`
 - `.ai/pipelines/code-refactoring.md`
+- `.ai/pipelines/create-test-from-spec.md` — staged test generation from a specification
 
-For non-trivial work that none of those fit (e.g., bug investigation, migration, CI work, doc change with executable impact), describe an ad-hoc step sequence and end it with `report-completion`. When the ad-hoc work is a new feature or significant change (not a trivial task or ongoing fix), include `.ai/skills/branch-setup/SKILL.md` after `bead-work` and before any implementation step begins.
+The manager selects a pipeline and hands off. Stage orchestration (explorer → developer → reviewer → task-complete) lives inside the pipeline, not in the manager. The manager must not reproduce or re-describe the pipeline's internal sequence.
 
-### 4. Append `report-completion` To Every Non-Trivial Pipeline
+For non-trivial work that none of those fit (e.g., bug investigation, migration, CI work, doc change with executable impact), describe an ad-hoc capability sequence and end it with `task-complete`. When the ad-hoc work is a new feature or significant change (not a trivial task or ongoing fix), include `.ai/skills/branch-setup/SKILL.md` after `bead-work` and before any implementation step begins.
 
-`report-completion` is the mandatory closure step for every non-trivial routed task. The manager owns this responsibility; pipelines and execution skills must not restate it.
+### 4. Append `task-complete` To Every Non-Trivial Pipeline
+
+`task-complete` is the mandatory closure step for every non-trivial routed task. The manager owns this responsibility; pipelines and execution skills must not restate it.
 
 ### 5. Escalate By Risk
 
@@ -75,6 +78,6 @@ If a safe routing decision depends on missing or conflicting policy, stop and su
 At routing time, produce a short execution plan:
 
 - task classification (complexity, risk, cross-domain)
-- selected capabilities in order
+- selected pipeline or ad-hoc capability sequence
 - validation and review requirements
-- explicit final `report-completion` step
+- explicit final `task-complete` step

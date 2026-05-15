@@ -38,7 +38,7 @@ Before doing any work, classify the task:
 
 If the task requires choosing between meaningful options before implementation can begin (open design, profile clarification, ambiguous user request with material trade-offs), stop and load `brainstorm` before `manager`.
 
-For non-trivial implementation and refactoring work, `bead-work` is the mandatory first step — find or propose a tracking bead before any code changes begin. `report-completion` is the mandatory final step, appended by `manager`. Pipelines sequence these steps without restating the policy rationale.
+For non-trivial implementation and refactoring work, `bead-work` is the mandatory first step — find or propose a tracking bead before any code changes begin. `task-complete` is the mandatory final step, appended by `manager`. Pipelines sequence these steps without restating the policy rationale.
 
 Exception: routine fixes on the current branch that only restore existing validation (for example lint, typecheck, or test failures) do not require `bead-work` or `branch-setup`, provided they do not add product behavior, perform a refactor, touch risky files, or change CI/package scripts. State that the exception applies, proceed on the current branch, and still run the required verification before handoff.
 
@@ -48,8 +48,8 @@ Shared capabilities under `.ai/`:
 
 | Capability | Location | Purpose |
 |---|---|---|
-| `manager` | `.ai/skills/manager/SKILL.md` | Centralized routing for non-trivial work |
-| `report-completion` | `.ai/skills/report-completion/SKILL.md` | Closure report for non-trivial work |
+| `manager` | `.ai/skills/manager/SKILL.md` | Centralized routing for non-trivial work; selects pipeline, does not orchestrate stages |
+| `task-complete` | `.ai/skills/task-complete/SKILL.md` | Closure report for non-trivial work |
 | `brainstorm` | `.ai/skills/brainstorm/SKILL.md` | Structured discussion for open design or trade-off decisions |
 | `implement-feature` | `.ai/skills/implement-feature/SKILL.md` | Additive code and test execution |
 | `refactor-code` | `.ai/skills/refactor-code/SKILL.md` | Behavior-preserving restructuring |
@@ -64,12 +64,15 @@ Pipelines for repeated multi-step workflows:
 | `feature-implementation` | `.ai/pipelines/feature-implementation.md` |
 | `code-review` | `.ai/pipelines/code-review.md` |
 | `code-refactoring` | `.ai/pipelines/code-refactoring.md` |
+| `create-test-from-spec` | `.ai/pipelines/create-test-from-spec.md` |
 
 Agents for specialized roles:
 
 | Agent | Location | Purpose |
 |---|---|---|
 | `instruction-evaluator` | `.ai/agents/instruction-evaluator/AGENT.md` | Isolated review of instruction artifacts; use in place of `review-code` when reviewing skills, agents, pipelines, conventions, or adapters |
+| `explorer` | `.ai/agents/explorer/AGENT.md` | Inspects codebase before implementation; produces structured handoff for developer stage |
+| `test-reviewer` | `.ai/agents/test-reviewer/AGENT.md` | Reviews generated test implementations for convention compliance, selector quality, and maintainability |
 
 Shared conventions referenced by capabilities:
 
@@ -114,5 +117,5 @@ Other tools are not in scope today. `.gemini/settings.json` references `AGENTS.m
 For framework reviewers:
 
 - `manager` ↔ canonical `manager` protocol
-- `report-completion` ↔ canonical `task_complete` protocol (renamed project-locally; mandatory behavior preserved)
+- `task-complete` ↔ canonical `task_complete` protocol
 - `brainstorm` ↔ canonical `brainstorm` protocol

@@ -31,9 +31,9 @@ Documentation-only changes skip local execution unless they affect:
 
 If the documentation change touches any executable surface, run the full required set against that surface.
 
-## Reporting In `report-completion`
+## Reporting In `task-complete`
 
-When `report-completion` runs at the end of a pipeline, list each required check that ran and any check that was intentionally skipped. Skipped checks must always carry a comment explaining why.
+When `task-complete` runs at the end of a pipeline, list each required check that ran and any check that was intentionally skipped. Skipped checks must always carry a comment explaining why.
 
 ## Commands Reference
 
