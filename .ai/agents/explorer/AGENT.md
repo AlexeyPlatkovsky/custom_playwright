@@ -21,6 +21,8 @@ Do not run explorer after implementation has started. If the implementation stag
 Before inspecting, read:
 
 - `docs/architecture/overview.md` — layer responsibilities
+- `docs/conventions/page-objects.md` — page object naming, structure, and navigation patterns
+- `docs/conventions/components.md` — component scoping and composition patterns
 - `.ai/conventions/code.md` — DSL boundaries and placement rules
 - `.ai/docs/project_specification.md` — domain vocabulary
 
