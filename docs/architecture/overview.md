@@ -27,14 +27,17 @@ This repository implements a strict Playwright Component-DSL and keeps the autho
 
 The `.ai/` directory holds the AI operational layer. Key components:
 
-- `manager` skill — classifies and routes tasks; selects a pipeline but does not orchestrate stages internally
+- `manager` skill — classifies and routes tasks; selects a pipeline; appends `documentation-maintenance` then `task-complete` on non-trivial work
 - `create-test-from-spec` pipeline — staged workflow for test generation: explorer → developer → reviewer → task-complete
-- `explorer` agent — read-only; inspects pages, components, fixtures, and patterns before implementation; produces a compact handoff
-- `test-reviewer` agent — read-only; validates generated tests for DSL compliance, selector quality, and maintainability
+- `explorer` agent — read-only; inspects pages, components, fixtures, and patterns before implementation; produces a compact `EXPLORER OUTPUT` handoff
+- `developer` agent — implements a test from spec using the explorer output as mandatory context; scoped to `create-test-from-spec`
+- `test-reviewer` agent — read-only; validates generated tests for DSL compliance, selector quality, and maintainability; produces a `Verdict + Findings` handoff
+- `documentation-maintenance` skill — updates docs after changes that affect behavior, interfaces, commands, architecture, or domain facts; runs before `task-complete`
 - `task-complete` skill — closure record for every non-trivial routed task
 - `instruction-evaluator` agent — read-only; evaluates instruction artifacts (skills, pipelines, agents, conventions)
+- `sync-manifesto` skill — ensures `.manifesto/` exists and matches the latest agent-manifesto release
 
-Accessibility smoke is an optional lightweight integration in the `create-test-from-spec` pipeline. When `@axe-core/playwright` is present, a report-only axe check can be appended after main test assertions. It records violations without failing the test.
+Each stage in `create-test-from-spec` passes an explicit handoff block (`EXPLORER OUTPUT`, `DEVELOPER OUTPUT`, `Verdict + Findings`) — no implicit context passing between stages.
 
 ## Locked constraints
 
