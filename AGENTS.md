@@ -56,6 +56,7 @@ Shared capabilities under `.ai/`:
 | `review-code` | `.ai/skills/review-code/SKILL.md` | Read-only review execution |
 | `bead-work` | `.ai/skills/bead-work/SKILL.md` | Issue tracking gate: find or propose a bead before significant work begins |
 | `branch-setup` | `.ai/skills/branch-setup/SKILL.md` | Git branch gate: decide whether a branch is needed, derive its name from the active bead, and create from `origin/main` |
+| `sync-manifesto` | `.ai/skills/sync-manifesto/SKILL.md` | Ensure `.manifesto/` exists and matches the latest agent-manifesto release; downloads and replaces if versions differ |
 
 Pipelines for repeated multi-step workflows:
 
