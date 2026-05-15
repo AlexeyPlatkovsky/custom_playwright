@@ -77,6 +77,10 @@ Agents for specialized roles:
 | `developer` | `.ai/agents/developer/AGENT.md` | Implements a test from a specification using explorer output as mandatory context; scoped to create-test-from-spec pipeline |
 | `test-reviewer` | `.ai/agents/test-reviewer/AGENT.md` | Reviews generated test implementations for convention compliance, selector quality, and maintainability |
 
+Pipeline test system:
+
+- `.ai/tests/` — scenario cards, fixtures, and offline/online runners for the `create-test-from-spec` pipeline; see `.ai/tests/README.md`
+
 Shared conventions referenced by capabilities:
 
 - Code and DSL boundaries: `.ai/conventions/code.md`
