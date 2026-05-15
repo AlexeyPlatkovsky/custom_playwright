@@ -27,6 +27,10 @@ Before reviewing, confirm both inputs are present:
 
 Read before reviewing:
 
+- `docs/architecture/overview.md` — layer responsibilities and locked constraints
+- `docs/conventions/page-objects.md` — page object naming, structure, and navigation patterns
+- `docs/conventions/components.md` — component scoping and composition patterns
+- `docs/guides/authoring-with-the-dsl.md` — assertion helpers, fixtures, and tagging
 - `.ai/conventions/code.md` — DSL boundaries, placement, assertion helper rules, tagging
 - `.ai/conventions/verification.md` — required verification checks
 - Every file listed under "Changed files" in the developer output

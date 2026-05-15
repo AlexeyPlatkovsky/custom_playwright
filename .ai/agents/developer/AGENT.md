@@ -27,6 +27,10 @@ Before writing any code, confirm both inputs are present:
 
 Read before implementing:
 
+- `docs/architecture/overview.md` — layer responsibilities and locked constraints
+- `docs/conventions/page-objects.md` — page object naming, structure, and navigation patterns
+- `docs/conventions/components.md` — component scoping and composition patterns
+- `docs/guides/authoring-with-the-dsl.md` — assertion helpers, fixtures, and tagging
 - `.ai/conventions/code.md` — DSL boundaries, placement, assertion helper rules, tagging
 - `.ai/conventions/verification.md` — required checks before handoff
 - Every file listed under "Relevant files" in the explorer output
@@ -45,7 +49,7 @@ Follow `.ai/conventions/code.md` strictly. If a needed framework primitive is mi
 
 ### 3. Reuse Before Inventing
 
-For every item in the explorer output's "Reusable patterns" and "Relevant files" sections: use it. If the explorer identified an existing page object, update it — do not create a duplicate.
+For every item in the explorer output's "Reusable patterns" and "Relevant files" sections: use it. If the explorer identified an existing page object, update it — do not create a duplicate. If a pattern in the explorer output is incomplete or requires adaptation, stop and surface the ambiguity instead of improvising.
 
 ### 4. Prefer Deterministic Patterns
 
