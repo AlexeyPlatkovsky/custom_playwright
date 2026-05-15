@@ -56,17 +56,29 @@ The manager selects a pipeline and hands off. Stage orchestration (explorer → 
 
 For non-trivial work that none of those fit (e.g., bug investigation, migration, CI work, doc change with executable impact), describe an ad-hoc capability sequence and end it with `task-complete`. When the ad-hoc work is a new feature or significant change (not a trivial task or ongoing fix), include `.ai/skills/branch-setup/SKILL.md` after `bead-work` and before any implementation step begins.
 
-### 4. Append `task-complete` To Every Non-Trivial Pipeline
+### 4. Append Documentation Maintenance When Its Trigger Fires
+
+Before `task-complete`, append `.ai/skills/documentation-maintenance/SKILL.md` when the completed change:
+
+- adds or changes project behavior, a public interface, or a DSL abstraction
+- changes commands, architecture, layer responsibilities, or domain facts
+- introduces or removes a documented convention or capability contract
+
+The manager owns this responsibility. Pipelines and execution skills must not restate it.
+
+Instruction-system changes (new or modified skills, agents, pipelines, or conventions) always trigger documentation maintenance.
+
+### 5. Append `task-complete` To Every Non-Trivial Pipeline
 
 `task-complete` is the mandatory closure step for every non-trivial routed task. The manager owns this responsibility; pipelines and execution skills must not restate it.
 
-### 5. Escalate By Risk
+### 6. Escalate By Risk
 
 - low or medium risk + non-trivial: pipeline plus the validation gate the pipeline defines
 - high risk: pipeline plus stronger review (explicit pre-handoff user confirmation, broader test runs)
 - system-level (CI workflow, ESLint plugin internals under `eslint-plugin-xframework/`, fixture infrastructure under `framework/fixtures/`, framework core under `framework/core/`): block implementation until the user confirms scope and validation plan
 
-### 6. Stop On Missing Or Conflicting Policy
+### 7. Stop On Missing Or Conflicting Policy
 
 If a safe routing decision depends on missing or conflicting policy, stop and surface the ambiguity:
 
@@ -80,4 +92,5 @@ At routing time, produce a short execution plan:
 - task classification (complexity, risk, cross-domain)
 - selected pipeline or ad-hoc capability sequence
 - validation and review requirements
+- documentation maintenance step when its trigger applies
 - explicit final `task-complete` step

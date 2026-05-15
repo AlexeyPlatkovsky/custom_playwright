@@ -57,6 +57,7 @@ Shared capabilities under `.ai/`:
 | `bead-work` | `.ai/skills/bead-work/SKILL.md` | Issue tracking gate: find or propose a bead before significant work begins |
 | `branch-setup` | `.ai/skills/branch-setup/SKILL.md` | Git branch gate: decide whether a branch is needed, derive its name from the active bead, and create from `origin/main` |
 | `sync-manifesto` | `.ai/skills/sync-manifesto/SKILL.md` | Ensure `.manifesto/` exists and matches the latest agent-manifesto release; downloads and replaces if versions differ |
+| `documentation-maintenance` | `.ai/skills/documentation-maintenance/SKILL.md` | Update project docs after changes that affect behavior, interfaces, commands, architecture, or domain facts; runs before `task-complete` |
 
 Pipelines for repeated multi-step workflows:
 
@@ -72,7 +73,8 @@ Agents for specialized roles:
 | Agent | Location | Purpose |
 |---|---|---|
 | `instruction-evaluator` | `.ai/agents/instruction-evaluator/AGENT.md` | Isolated review of instruction artifacts; use in place of `review-code` when reviewing skills, agents, pipelines, conventions, or adapters |
-| `explorer` | `.ai/agents/explorer/AGENT.md` | Inspects codebase before implementation; produces structured handoff for developer stage |
+| `explorer` | `.ai/agents/explorer/AGENT.md` | Inspects codebase before implementation; produces structured handoff for developer agent |
+| `developer` | `.ai/agents/developer/AGENT.md` | Implements a test from a specification using explorer output as mandatory context; scoped to create-test-from-spec pipeline |
 | `test-reviewer` | `.ai/agents/test-reviewer/AGENT.md` | Reviews generated test implementations for convention compliance, selector quality, and maintainability |
 
 Shared conventions referenced by capabilities:

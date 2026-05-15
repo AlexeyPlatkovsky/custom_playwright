@@ -76,7 +76,13 @@ rm -rf .manifesto/*
 
 # Extract — GitHub zipballs unpack into a single top-level subdirectory
 unzip -q /tmp/manifesto-latest.zip -d /tmp/manifesto-extract
-extracted_dir=$(ls -d /tmp/manifesto-extract/*/ | head -1)
+extracted_dir=$(ls -d /tmp/manifesto-extract/*/ 2>/dev/null | head -1)
+
+if [ -z "$extracted_dir" ]; then
+  echo "sync-manifesto: ERROR — extraction produced no directory. Aborting; .manifesto/ contents preserved."
+  rm -rf /tmp/manifesto-latest.zip /tmp/manifesto-extract
+  exit 1
+fi
 
 # Move all extracted files into .manifesto/
 mv "$extracted_dir"* .manifesto/
