@@ -42,8 +42,10 @@ If the spec is ambiguous after inspection, the explorer must stop and surface th
 
 **Input:** test specification + `EXPLORER OUTPUT` block from Stage 1
 
+**Mode:** the operator must declare one of `offline` or `online` before Stage 2 begins. If not declared, default to `online`.
+
 **Runs:** checks required by `.ai/conventions/verification.md` for the declared mode:
-- **offline mode** — `npm run typecheck` and `npm run lint`; browser suite skipped
+- **offline mode** — `npm run typecheck` and `npm run lint`; browser suite skipped. Offline approval is provisional — the generated test must pass in online mode before merging.
 - **online mode** — `npm run typecheck`, `npm run lint`, and `npm run test:ui` scoped to the generated spec
 
 **Output (required before Stage 3):**

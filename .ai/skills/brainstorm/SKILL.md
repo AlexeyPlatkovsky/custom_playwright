@@ -37,6 +37,8 @@ For every question, provide 2–3 concrete, comparable options. Options must be:
 - actionable
 - specific enough to compare
 
+For factual setup or profile fields, always provide a free-form correction path so the user can supply the actual role, tool, path, or project fact when the listed options are incomplete or inaccurate.
+
 ### 3. Always Highlight Trade-Offs
 
 For each option, state:

@@ -127,3 +127,4 @@ For framework reviewers:
 - `manager` ↔ canonical `manager` protocol
 - `task-complete` ↔ canonical `task_complete` protocol
 - `brainstorm` ↔ canonical `brainstorm` protocol
+- `documentation-maintenance` ↔ canonical `documentation_maintenance` protocol

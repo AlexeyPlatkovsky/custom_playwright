@@ -62,7 +62,7 @@ Available pipelines for non-trivial routed work:
 - `.ai/pipelines/code-refactoring.md`
 - `.ai/pipelines/create-test-from-spec.md` — staged test generation from a specification
 
-The manager selects a pipeline and hands off. Stage orchestration (explorer → developer → reviewer → task-complete) lives inside the pipeline, not in the manager. The manager must not reproduce or re-describe the pipeline's internal sequence.
+The manager selects a pipeline and hands off. Stage orchestration (explorer → developer → reviewer) lives inside the pipeline, not in the manager. The manager must not reproduce or re-describe the pipeline's internal sequence.
 
 For non-trivial work that none of those fit (e.g., bug investigation, migration, CI work, doc change with executable impact), describe an ad-hoc capability sequence and end it with `task-complete`. When the ad-hoc work is a new feature or significant change (not a trivial task or ongoing fix), include `.ai/skills/branch-setup/SKILL.md` after `bead-work` and before any implementation step begins.
 
