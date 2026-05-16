@@ -1,6 +1,6 @@
 ---
 name: task-complete
-description: Closure report for non-trivial routed work in playforge. Run as the final step of every non-trivial pipeline.
+description: Closure report for non-trivial routed work in playforge.
 ---
 
 # task-complete
