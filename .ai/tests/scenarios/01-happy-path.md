@@ -25,4 +25,4 @@ None — run all three stages with live AI execution.
 
 ## Pass Criterion
 
-Reviewer verdict is `Approve` or `Approve with minor fixes` AND the changed file is `tests/ui/products.spec.ts` AND typecheck and lint both show `passed` in the DEVELOPER OUTPUT block.
+Reviewer verdict is `Approve` or `Approve with minor fixes` AND the changed file is `tests/ui/products.spec.ts` AND the DEVELOPER OUTPUT block shows `npm run typecheck — passed`, `npm run lint — passed`, and `Browser verification — skipped (offline mode)`.

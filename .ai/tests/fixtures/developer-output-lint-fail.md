@@ -13,8 +13,9 @@ Changed files:
   tests/ui/products.spec.ts — added "empty search shows zero results @ui" test using page.locator() for catalog container (DSL violation)
 
 Verification:
-  npm run typecheck — passed
-  npm run lint     — failed: xframework/no-raw-locator-in-tests at tests/ui/products.spec.ts:67:22 — raw page.locator() call not permitted in test files
+  npm run typecheck    — passed
+  npm run lint         — failed: xframework/no-raw-locator-in-tests at tests/ui/products.spec.ts:67:22 — raw page.locator() call not permitted in test files
+  Browser verification — not applicable (lint failed; did not proceed)
 
 Accessibility smoke: not applicable
 ```

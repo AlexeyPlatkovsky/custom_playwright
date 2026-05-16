@@ -13,8 +13,9 @@ Changed files:
   tests/ui/products.spec.ts — added "empty search shows zero results @ui" test
 
 Verification:
-  npm run typecheck — passed
-  npm run lint     — passed
+  npm run typecheck    — passed
+  npm run lint         — passed
+  Browser verification — skipped (offline mode)
 
 Accessibility smoke: skipped — package not installed
 ```

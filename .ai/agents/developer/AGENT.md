@@ -61,7 +61,12 @@ If `@axe-core/playwright` is present in `package.json`, append a report-only axe
 
 ### 6. Verify Before Handoff
 
-Run the checks required by `.ai/conventions/verification.md`. Do not produce the handoff with a failing check.
+Run the checks required by `.ai/conventions/verification.md` for the declared mode:
+
+- **offline mode** — run `npm run typecheck` and `npm run lint`. Do not run `npm run test:ui`. Record `Browser verification: skipped (offline mode)` in the output block. Offline approval is provisional; the generated test must pass in online mode before merging.
+- **online mode** — run `npm run typecheck`, `npm run lint`, and `npm run test:ui`. Record the browser result in the output block.
+
+Do not produce the handoff with a failing check in either mode.
 
 ## Output Contract
 
@@ -75,8 +80,9 @@ Changed files:
   ...
 
 Verification:
-  npm run typecheck — passed
-  npm run lint     — passed
+  npm run typecheck    — passed
+  npm run lint         — passed
+  Browser verification — <passed | failed | skipped (offline mode)>
 
 Accessibility smoke: <added report-only | skipped — package not installed | not applicable>
 ```
