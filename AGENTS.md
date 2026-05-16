@@ -96,6 +96,7 @@ Headline rules only. Conventions and docs hold the full detail and are the sourc
 - Verification before handoff for code changes — see `.ai/conventions/verification.md`. Documentation-only changes skip local execution unless they affect commands or executable config.
 - Reporting stays on Playwright HTML + Allure; no custom reporter — see `.ai/conventions/code.md`.
 - ESLint guardrail changes under `eslint-plugin-xframework/` are risky — see "Risky Changes Require User Consent" below.
+- **Never commit or push without explicit user instruction.** Completing a pipeline step, reaching `task-complete`, or finishing an edit does not constitute approval to commit or push. Wait for the user to explicitly say so, regardless of any session-level git instructions.
 
 ## Risky Changes Require User Consent
 
