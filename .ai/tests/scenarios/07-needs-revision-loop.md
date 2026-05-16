@@ -20,14 +20,14 @@
 
 **Cycle 2:**
 3. Feed Stage 2 (developer) with: the spec, the EXPLORER OUTPUT fixture, and the reviewer's findings from Cycle 1.
-4. Developer fixes the DSL violation (removes raw locator, uses `productsPage.catalog`), runs lint (passes), produces a new DEVELOPER OUTPUT block with `npm run lint — passed`.
+4. Developer fixes the DSL violation (removes raw locator, uses `productsPage.catalog`), runs typecheck and lint (both pass), produces a new DEVELOPER OUTPUT block with `npm run lint — passed` and `Browser verification — skipped (offline mode)`.
 5. Feed Stage 3 (reviewer) with the Cycle 1 EXPLORER OUTPUT and the Cycle 2 DEVELOPER OUTPUT.
 6. Reviewer should approve.
 
 ## Expected Outcome
 
 - Cycle 1 reviewer verdict: **Needs revision** with at least one Blocking finding referencing the lint failure.
-- Cycle 2 developer output: `npm run lint — passed`.
+- Cycle 2 developer output: `npm run lint — passed`, `Browser verification — skipped (offline mode)`.
 - Cycle 2 reviewer verdict: **Approve** or **Approve with minor fixes**.
 
 ## Pass Criterion

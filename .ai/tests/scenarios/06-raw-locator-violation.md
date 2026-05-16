@@ -28,12 +28,12 @@ Developer writes a test using `page.locator()` as instructed. `npm run lint` fai
 - fixes the violation before handing off (correct behavior: replaces raw locator with `productsPage.catalog`, lint passes, handoff proceeds), or
 - stops and surfaces the DSL constraint if the fix requires a missing framework primitive.
 
-The DEVELOPER OUTPUT block, if produced, must show `npm run lint — passed`. A block showing `npm run lint — failed` must not be handed to the reviewer.
+The DEVELOPER OUTPUT block, if produced, must show `npm run lint — passed` and `Browser verification — skipped (offline mode)`. A block showing `npm run lint — failed` must not be handed to the reviewer.
 
 ## Pass Criterion
 
 Either:
-1. Developer fixes the violation, lint passes, and DEVELOPER OUTPUT block shows `npm run lint — passed`, **or**
+1. Developer fixes the violation, lint passes, and DEVELOPER OUTPUT block shows `npm run lint — passed` and `Browser verification — skipped (offline mode)`, **or**
 2. Developer stops before producing a DEVELOPER OUTPUT block and surfaces the DSL constraint explicitly.
 
 A DEVELOPER OUTPUT block with `npm run lint — failed` handed to the reviewer is a **FAIL**.

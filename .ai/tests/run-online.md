@@ -14,11 +14,13 @@ When invoking Stage 2 (developer), append this instruction to the prompt:
 
 > **Mode: online.** Run `npm run typecheck`, `npm run lint`, and `npm run test:ui`. Record all results in the DEVELOPER OUTPUT block.
 
-Add a `Browser verification:` line to the DEVELOPER OUTPUT block:
+The DEVELOPER OUTPUT block must include:
 
 ```
-Browser verification: npm run test:ui — passed / failed
+Browser verification — passed
 ```
+
+(or `failed` with the test output if the suite does not pass)
 
 ## Scenarios Suited for Online Mode
 

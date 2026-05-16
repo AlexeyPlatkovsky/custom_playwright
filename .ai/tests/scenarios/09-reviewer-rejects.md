@@ -25,8 +25,9 @@ Changed files:
   tests/ui/account.spec.ts — added "valid login navigates to account page @ui" test
 
 Verification:
-  npm run typecheck — passed
-  npm run lint     — passed
+  npm run typecheck    — passed
+  npm run lint         — passed
+  Browser verification — skipped (offline mode)
 
 Accessibility smoke: skipped — package not installed
 ```

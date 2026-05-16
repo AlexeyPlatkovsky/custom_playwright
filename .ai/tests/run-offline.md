@@ -6,7 +6,7 @@ Runs all pipeline scenarios with real AI agents. `npm run test:ui` is skipped â€
 
 When invoking Stage 2 (developer), append this instruction to the prompt:
 
-> **Mode: offline.** Run `npm run typecheck` and `npm run lint` but do not run `npm run test:ui`. Record the result in the DEVELOPER OUTPUT block and pass it to Stage 3.
+> **Mode: offline.** Run `npm run typecheck` and `npm run lint` but do not run `npm run test:ui`. Record `Browser verification â€” skipped (offline mode)` in the DEVELOPER OUTPUT block and pass it to Stage 3.
 
 ## Scenario Execution
 
