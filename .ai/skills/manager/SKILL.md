@@ -33,11 +33,21 @@ Before any non-trivial work begins, state explicitly:
 
 If the task is actually trivial, say so and release it for direct execution.
 
-### 2. Routing Only
+### 2. State Verification Plan Before Routing
+
+Before selecting a pipeline or capability sequence, state how the change will be verified. This step is mandatory for all non-trivial work and must appear in the routing output before the pipeline selection.
+
+- **Code changes** — name the targeted test, spec, or check that will confirm correctness (e.g., `npm run test:ui` against a named scenario, a specific unit spec, typecheck + lint).
+- **Instruction-system changes** — name the scenario from `.ai/tests/` that exercises the change, or propose a new one if no existing scenario covers it.
+- **Minor changes where the verification is a single obvious existing check** — state it in one line (e.g., "verification plan: `npm run typecheck`").
+
+Do not begin implementation until the verification plan is stated. If no suitable verification exists and the change is non-trivial, propose one before proceeding.
+
+### 3. Routing Only
 
 The manager chooses and sequences capabilities. It does not implement steps itself. If you find yourself describing how to do the work, you have left the manager role.
 
-### 3. Name The Concrete Next Capability
+### 4. Name The Concrete Next Capability
 
 Produce a routing decision that identifies:
 
@@ -56,7 +66,7 @@ The manager selects a pipeline and hands off. Stage orchestration (explorer → 
 
 For non-trivial work that none of those fit (e.g., bug investigation, migration, CI work, doc change with executable impact), describe an ad-hoc capability sequence and end it with `task-complete`. When the ad-hoc work is a new feature or significant change (not a trivial task or ongoing fix), include `.ai/skills/branch-setup/SKILL.md` after `bead-work` and before any implementation step begins.
 
-### 4. Append Documentation Maintenance When Its Trigger Fires
+### 5. Append Documentation Maintenance When Its Trigger Fires
 
 Before `task-complete`, append `.ai/skills/documentation-maintenance/SKILL.md` when the completed change:
 
@@ -68,17 +78,17 @@ The manager owns this responsibility. Pipelines and execution skills must not re
 
 Instruction-system changes (new or modified skills, agents, pipelines, or conventions) always trigger documentation maintenance.
 
-### 5. Append `task-complete` To Every Non-Trivial Pipeline
+### 6. Append `task-complete` To Every Non-Trivial Pipeline
 
 `task-complete` is the mandatory closure step for every non-trivial routed task. The manager owns this responsibility; pipelines and execution skills must not restate it.
 
-### 6. Escalate By Risk
+### 7. Escalate By Risk
 
 - low or medium risk + non-trivial: pipeline plus the validation gate the pipeline defines
 - high risk: pipeline plus stronger review (explicit pre-handoff user confirmation, broader test runs)
 - system-level (CI workflow, ESLint plugin internals under `eslint-plugin-xframework/`, fixture infrastructure under `framework/fixtures/`, framework core under `framework/core/`): block implementation until the user confirms scope and validation plan
 
-### 7. Stop On Missing Or Conflicting Policy
+### 8. Stop On Missing Or Conflicting Policy
 
 If a safe routing decision depends on missing or conflicting policy, stop and surface the ambiguity:
 
@@ -90,6 +100,7 @@ If a safe routing decision depends on missing or conflicting policy, stop and su
 At routing time, produce a short execution plan:
 
 - task classification (complexity, risk, cross-domain)
+- verification plan — how the change will be confirmed correct
 - selected pipeline or ad-hoc capability sequence
 - validation and review requirements
 - documentation maintenance step when its trigger applies
