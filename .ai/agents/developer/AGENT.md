@@ -12,9 +12,8 @@ Implement the test described in the specification, guided by the compact handoff
 
 ## When To Use
 
-Run as Stage 2 of the `create-test-from-spec` pipeline, after the explorer output block is available.
-
-Do not use this agent for general feature work or page object authoring outside the test-creation pipeline — use `implement-feature` skill for that.
+Do not use this agent outside the `create-test-from-spec` pipeline.
+For unrelated implementation tasks, route through the appropriate PlayForge workflow.
 
 ## Required Input
 
