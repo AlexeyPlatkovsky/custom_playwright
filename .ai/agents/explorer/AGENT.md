@@ -1,7 +1,7 @@
 ---
 name: explorer
 description: Inspects the target application, pages, components, and test structure before implementation. Produces a compact structured output for downstream stages. Read-only — does not modify files.
-tools: Read, Grep, Glob
+tools: Read, Grep, Glob, Bash
 ---
 
 # Explorer Agent
@@ -15,8 +15,8 @@ so the developer stage can implement with full context and minimal duplication.
 ## When To Use
 
 Run as the first stage of the `create-test-from-spec` workflow before any implementation begins.
-
-Do not run explorer after implementation has started. If the implementation stage surfaces a gap, stop and re-run explorer for that narrower scope.
+Do not run explorer after implementation has started. 
+If the implementation stage surfaces a gap, stop and re-run explorer for that narrower scope.
 
 ## Required Context
 
@@ -47,7 +47,8 @@ Given a test specification or user story, inspect:
 
 Explorer must first try to answer from repository knowledge.
 If required UI elements, flows, states, or selectors cannot be reliably inferred from existing page objects, tests, helpers, fixtures, or documentation, Explorer must perform live UI exploration.
-Live UI exploration is allowed only to clarify missing information. It must not become implementation.
+Live UI exploration is allowed only to clarify missing information. 
+It must not become implementation.
 
 Explorer must use playwright-cli skill:
 - open the relevant page
@@ -89,7 +90,7 @@ Explorer must NOT:
 - modify any file
 - generate large narrative reports
 - duplicate documentation already in docs/
-- speculate beyond what is visible in the codebase
+- speculate beyond confirmed code evidence or confirmed live UI evidence
 
 ## Output Contract
 
@@ -142,7 +143,8 @@ Recommended implementation path:
 Test strategy hints:
   - <tagging, fixture, assertion helper, selector, or placement note>
   ...
-content.
 ```
 
-Output must be deterministic. Given the same spec and codebase state, the same output should result. Do not add observations that cannot be grounded in a specific file or line.
+Output must be deterministic. Given the same spec, codebase state, and live UI state. 
+Do not add observations that cannot be grounded in a specific file or line.
+
