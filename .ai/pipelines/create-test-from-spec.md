@@ -12,7 +12,7 @@ Use this pipeline when the task is:
 Do not use this pipeline for:
 
 - refactoring existing tests (use `code-refactoring`)
-- pure page object or component work without a test spec (use `feature-implementation`)
+- pure page object or component work without a test spec (use `framework-feature-implementation`)
 - one-line obvious test additions classified as trivial (proceed directly)
 
 ## Execution Sequence
@@ -42,18 +42,15 @@ If the spec is ambiguous after inspection, the explorer must stop and surface th
 
 **Input:** test specification + `EXPLORER OUTPUT` block from Stage 1
 
-**Mode:** the operator must declare one of `offline` or `online` before Stage 2 begins. If not declared, default to `online`.
-
-**Runs:** checks required by `.ai/conventions/verification.md` for the declared mode:
-- **offline mode** — `npm run typecheck` and `npm run lint`; browser suite skipped. Offline approval is provisional — the generated test must pass in online mode before merging.
-- **online mode** — `npm run typecheck`, `npm run lint`, and `npm run test:ui` scoped to the generated spec
+**Runs:** checks required by `.ai/conventions/verification.md`:
+— `npm run typecheck`, `npm run lint`, and `npm run test:ui` scoped to the generated spec
 
 **Output (required before Stage 3):**
 ```
 DEVELOPER OUTPUT block
   npm run typecheck    — passed / failed
   npm run lint         — passed / failed
-  Browser verification — passed / failed / skipped (offline mode)
+  Browser verification — passed / failed / skipped
   Accessibility smoke  — added report-only / skipped — package not installed / not applicable
 ```
 

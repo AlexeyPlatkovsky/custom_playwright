@@ -57,7 +57,7 @@ Produce a routing decision that identifies:
 
 Available pipelines for non-trivial routed work:
 
-- `.ai/pipelines/feature-implementation.md`
+- `.ai/pipelines/framework-feature-implementation.md`
 - `.ai/pipelines/code-review.md`
 - `.ai/pipelines/code-refactoring.md`
 - `.ai/pipelines/create-test-from-spec.md` — staged test generation from a specification

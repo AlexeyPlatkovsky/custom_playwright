@@ -63,7 +63,7 @@ Pipelines for repeated multi-step workflows:
 
 | Pipeline | Location |
 |---|---|
-| `feature-implementation` | `.ai/pipelines/feature-implementation.md` |
+| `framework-feature-implementation` | `.ai/pipelines/framework-feature-implementation.md` |
 | `code-review` | `.ai/pipelines/code-review.md` |
 | `code-refactoring` | `.ai/pipelines/code-refactoring.md` |
 | `create-test-from-spec` | `.ai/pipelines/create-test-from-spec.md` |

@@ -6,7 +6,7 @@ Ordered pipeline for restructuring existing code in playforge without changing u
 
 Use this pipeline when the goal is to reshape code while preserving behavior.
 
-Use `feature-implementation` when behavior is being added. Refactors crossing framework core, shared fixtures, or ESLint plugin internals are system-level risk.
+Use `framework-feature-implementation` when behavior is being added. Refactors crossing framework core, shared fixtures, or ESLint plugin internals are system-level risk.
 
 ## Sequence
 
